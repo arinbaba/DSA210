@@ -18,56 +18,80 @@ data = {
                     6.8, 6.5, 6.0, 6.2, 7.1, 6.7, 6.4, 7.2, 6.9, 7.0,
                     6.0, 6.3, 5.8, 6.1, 6.5, 6.9, 6.2, 6.7, 7.0, 6.3,
                     6.1, 6.2, 6.0, 6.8, 6.5, 6.7, 6.3, 6.6, 7.0, 6.9,
-                    5.9, 6.1, 6.0, 6.7, 6.2, 6.5, 6.8, 6.9, 6.7, 7.0]
+                    5.9, 6.1, 6.0, 6.7, 6.2, 6.5, 6.8, 6.9, 6.7, 7.0],
+    "Sleep_Score": [78, 75, 74, 80, 77, 82, 79, 76, 85, 74,
+                    87, 84, 76, 80, 88, 85, 81, 89, 86, 90,
+                    73, 78, 76, 74, 84, 85, 80, 87, 89, 83,
+                    75, 77, 79, 82, 83, 85, 86, 88, 87, 89,
+                    72, 76, 75, 81, 83, 85, 86, 87, 88, 89],
+    "REM_Sleep_Hours": [1.8, 1.5, 2.0, 1.9, 1.4, 2.1, 1.7, 1.3, 2.2, 1.6,
+                         2.4, 2.1, 1.5, 2.0, 2.3, 2.2, 1.9, 2.5, 2.1, 2.6,
+                         1.4, 1.8, 1.7, 1.3, 2.1, 2.3, 1.9, 2.4, 2.5, 2.0,
+                         1.6, 1.7, 1.8, 2.0, 2.1, 2.3, 2.0, 2.2, 2.4, 2.5,
+                         1.5, 1.7, 1.6, 2.1, 2.2, 2.3, 2.4, 2.5, 2.3, 2.4],
+    "Deep_Sleep_Hours": [1.2, 1.1, 1.0, 1.3, 1.2, 1.1, 1.0, 1.3, 1.2, 1.1,
+                          1.0, 1.1, 1.2, 1.0, 1.3, 1.2, 1.1, 1.2, 1.3, 1.1,
+                          1.0, 1.2, 1.1, 1.0, 1.2, 1.3, 1.1, 1.3, 1.2, 1.1,
+                          1.0, 1.1, 1.2, 1.1, 1.0, 1.3, 1.2, 1.2, 1.1, 1.3,
+                          1.0, 1.1, 1.1, 1.2, 1.3, 1.1, 1.0, 1.2, 1.2, 1.3],
+    "Light_Sleep_Hours": [3.5, 3.3, 3.2, 3.4, 3.2, 3.5, 3.3, 3.1, 3.7, 3.4,
+                           3.8, 3.5, 3.2, 3.6, 3.7, 3.6, 3.5, 3.8, 3.6, 3.9,
+                           3.1, 3.4, 3.3, 3.2, 3.5, 3.7, 3.4, 3.8, 3.9, 3.6,
+                           3.3, 3.4, 3.5, 3.5, 3.4, 3.7, 3.5, 3.6, 3.8, 3.9,
+                           3.2, 3.4, 3.3, 3.6, 3.7, 3.7, 3.5, 3.8, 3.7, 3.9]
 }
 
 # Create DataFrame
 df = pd.DataFrame(data)
 
-# Show entire dataset
-print("Entire dataset:")
-print(df)
-
-# Information about the data
-print("\nDataset Info:")
-print(df.info())
-
-# Descriptive statistics
-print("\nDescriptive Statistics:")
+# Extended EDA
+print("\nSummary Statistics:")
 print(df.describe())
 
-# Check for missing values
-print("\nMissing Values:")
-print(df.isnull().sum())
+print("\nCorrelation Matrix:")
+print(df.corr())
 
-# Scatter plot to visualize the relationship
-plt.figure(figsize=(8,6))
-sns.scatterplot(x='Magnesium_mg', y='Sleep_Hours', data=df)
-plt.title('Daily Magnesium Intake vs Sleep Duration')
-plt.xlabel('Magnesium Intake (mg)')
-plt.ylabel('Sleep Duration (hours)')
-plt.grid(True)
+# Heatmap of correlation matrix
+plt.figure(figsize=(10,8))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Correlation Heatmap')
 plt.show()
 
-# Pearson correlation
-corr, p_value = pearsonr(df['Magnesium_mg'], df['Sleep_Hours'])
+# Histograms for each variable
+df.hist(bins=15, figsize=(15,10), layout=(3,3))
+plt.suptitle('Histograms of Variables')
+plt.show()
 
-print(f"\nPearson Correlation Coefficient: {corr:.2f}")
-print(f"p-value: {p_value:.4f}")
+# Boxplots for each variable
+for column in df.columns:
+    plt.figure(figsize=(8,6))
+    sns.boxplot(y=df[column])
+    plt.title(f'Boxplot of {column.replace("_", " ")}')
+    plt.grid(True)
+    plt.show()
 
-# Hypothesis test interpretation
-if p_value < 0.05:
-    print("\nAccording to the hypothesis test, there is a statistically significant positive correlation between magnesium intake and sleep duration.")
-else:
-    print("\nAccording to the hypothesis test, there is no statistically significant correlation between magnesium intake and sleep duration.")
+# Pairplot to visualize pairwise relationships
+sns.pairplot(df)
+plt.suptitle('Pairwise Relationships between Variables', y=1.02)
+plt.show()
 
-# Limitations and Future Work (written as comments)
-# Limitations:
-# - The dataset includes only limited days of observations.
-# - Only sleep duration was considered, not sleep quality.
-# - External factors like stress or diet were not included.
+# Scatter plots and correlations for each sleep type
+for column in ['Sleep_Hours', 'Sleep_Score', 'REM_Sleep_Hours', 'Deep_Sleep_Hours', 'Light_Sleep_Hours']:
+    plt.figure(figsize=(8,6))
+    sns.scatterplot(x='Magnesium_mg', y=column, data=df)
+    plt.title(f'Daily Magnesium Intake vs {column.replace("_", " ")}')
+    plt.xlabel('Magnesium Intake (mg)')
+    plt.ylabel(column.replace("_", " "))
+    plt.grid(True)
+    plt.show()
 
-# Future Work:
-# - Collect data over a longer period.
-# - Add sleep quality and other health indicators.
-# - Apply machine learning models for prediction.
+    corr, p_value = pearsonr(df['Magnesium_mg'], df[column])
+
+    print(f"\nPearson Correlation Coefficient ({column.replace('_', ' ')}): {corr:.2f}")
+    print(f"p-value ({column.replace('_', ' ')}): {p_value:.4f}")
+
+    if p_value < 0.05:
+        print(f"There is a statistically significant positive correlation between magnesium intake and {column.replace('_', ' ')}.")
+    else:
+        print(f"There is no statistically significant correlation between magnesium intake and {column.replace('_', ' ')}.")
+
