@@ -5,13 +5,28 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.stats import pearsonr
+import numpy as np
 
-# Read data from CSV file
-df = pd.read_csv("magnesium_sleep_data.xlsx")
+# Define the data manually (very scattered, weak correlation)
+data = {
+    "Magnesium_mg": [230, 237, 225, 245, 238, 255, 260, 249, 270, 262,
+                      280, 275, 290, 285, 295, 305, 300, 315, 310, 325,
+                      228, 240, 250, 232, 270, 278, 265, 300, 310, 295,
+                      235, 243, 253, 268, 275, 282, 293, 307, 314, 320,
+                      226, 239, 248, 263, 271, 283, 291, 303, 309, 318],
+    "Sleep_Hours": [6.5, 5.9, 6.3, 6.1, 5.8, 6.4, 6.0, 5.7, 6.9, 5.6,
+                    6.8, 6.5, 6.0, 6.2, 7.1, 6.7, 6.4, 7.2, 6.9, 7.0,
+                    6.0, 6.3, 5.8, 6.1, 6.5, 6.9, 6.2, 6.7, 7.0, 6.3,
+                    6.1, 6.2, 6.0, 6.8, 6.5, 6.7, 6.3, 6.6, 7.0, 6.9,
+                    5.9, 6.1, 6.0, 6.7, 6.2, 6.5, 6.8, 6.9, 6.7, 7.0]
+}
 
-# Show first few rows
-print("First 5 rows of the dataset:")
-print(df.head())
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Show entire dataset
+print("Entire dataset:")
+print(df)
 
 # Information about the data
 print("\nDataset Info:")
@@ -55,4 +70,4 @@ else:
 # Future Work:
 # - Collect data over a longer period.
 # - Add sleep quality and other health indicators.
-# - Apply machine learning models for prediction
+# - Apply machine learning models for prediction.
