@@ -75,7 +75,7 @@ sns.pairplot(df)
 plt.suptitle('Pairwise Relationships between Variables', y=1.02)
 plt.show()
 
-# Scatter plots and correlations for each sleep type
+# Scatter plots, correlations, and hypothesis tests for each sleep type
 for column in ['Sleep_Hours', 'Sleep_Score', 'REM_Sleep_Hours', 'Deep_Sleep_Hours', 'Light_Sleep_Hours']:
     plt.figure(figsize=(8,6))
     sns.scatterplot(x='Magnesium_mg', y=column, data=df)
@@ -90,8 +90,12 @@ for column in ['Sleep_Hours', 'Sleep_Score', 'REM_Sleep_Hours', 'Deep_Sleep_Hour
     print(f"\nPearson Correlation Coefficient ({column.replace('_', ' ')}): {corr:.2f}")
     print(f"p-value ({column.replace('_', ' ')}): {p_value:.4f}")
 
-    if p_value < 0.05:
-        print(f"There is a statistically significant positive correlation between magnesium intake and {column.replace('_', ' ')}.")
+    # Hypothesis Testing
+    alpha = 0.05
+    print("Hypothesis Testing Result:")
+    if p_value < alpha:
+        print(f"Reject the null hypothesis: There is a statistically significant correlation between magnesium intake and {column.replace('_', ' ')}.")
     else:
-        print(f"There is no statistically significant correlation between magnesium intake and {column.replace('_', ' ')}.")
+        print(f"Fail to reject the null hypothesis: There is no statistically significant correlation between magnesium intake and {column.replace('_', ' ')}.")
+
 
