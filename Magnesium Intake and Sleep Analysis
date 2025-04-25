@@ -1,0 +1,58 @@
+# Magnesium Intake and Sleep Duration Analysis
+
+# Libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import pearsonr
+
+# Read data from CSV file
+df = pd.read_csv("magnesium_sleep_data.csv")
+
+# Show first few rows
+print("First 5 rows of the dataset:")
+print(df.head())
+
+# Information about the data
+print("\nDataset Info:")
+print(df.info())
+
+# Descriptive statistics
+print("\nDescriptive Statistics:")
+print(df.describe())
+
+# Check for missing values
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# Scatter plot to visualize the relationship
+plt.figure(figsize=(8,6))
+sns.scatterplot(x='Magnesium_mg', y='Sleep_Hours', data=df)
+plt.title('Daily Magnesium Intake vs Sleep Duration')
+plt.xlabel('Magnesium Intake (mg)')
+plt.ylabel('Sleep Duration (hours)')
+plt.grid(True)
+plt.show()
+
+# Pearson correlation
+corr, p_value = pearsonr(df['Magnesium_mg'], df['Sleep_Hours'])
+
+print(f"\nPearson Correlation Coefficient: {corr:.2f}")
+print(f"p-value: {p_value:.4f}")
+
+# Hypothesis test interpretation
+if p_value < 0.05:
+    print("\nAccording to the hypothesis test, there is a statistically significant positive correlation between magnesium intake and sleep duration.")
+else:
+    print("\nAccording to the hypothesis test, there is no statistically significant correlation between magnesium intake and sleep duration.")
+
+# Limitations and Future Work (written as comments)
+# Limitations:
+# - The dataset includes only limited days of observations.
+# - Only sleep duration was considered, not sleep quality.
+# - External factors like stress or diet were not included.
+
+# Future Work:
+# - Collect data over a longer period.
+# - Add sleep quality and other health indicators.
+# - Apply machine learning models for prediction
