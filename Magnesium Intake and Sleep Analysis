@@ -7,7 +7,7 @@ import seaborn as sns
 from scipy.stats import pearsonr
 
 # Read data from CSV file
-df = pd.read_csv("magnesium_sleep_data.csv")
+df = pd.read_csv("magnesium_sleep_data.xlsx")
 
 # Show first few rows
 print("First 5 rows of the dataset:")
