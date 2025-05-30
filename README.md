@@ -1,61 +1,62 @@
-# DSA210
+DSA 210 Project Report: Magnesium Intake and Fitness Performance Analysis
+1. Introduction
 
-# Magnesium Intake and Sleep Duration Analysis
+This report presents the results of a 60-day data science project investigating the relationship between nutritional supplementation (especially magnesium), sleep quality, and fitness performance. Using synthetically generated but realistic data derived from wearable devices and training logs, the goal was to determine how various supplement intakes and behavioral metrics affect physical performance and sleep outcomes.
 
-## Introduction
-Understanding the factors that influence sleep quality is essential for both personal health and broader clinical research. Magnesium, an essential mineral, has been associated with numerous physiological processes including nerve transmission, muscle function, and circadian rhythm regulation. However, its direct impact on different aspects of sleep remains an area of growing interest. This project investigates whether daily magnesium intake correlates with total sleep duration, sleep quality scores, and the distribution across various sleep stages (REM, Deep, and Light Sleep). Using a synthetically generated dataset inspired by real-world wearable technology data, we aim to uncover potential patterns and relationships through exploratory data analysis, statistical testing, and visualization techniques.
+2. Project Objectives
 
-## Project Overview
-This project explores the potential relationship between daily magnesium intake and various sleep-related metrics, including total sleep duration, sleep quality, and different sleep stages (REM, Deep, and Light Sleep). Magnesium plays a crucial role in numerous biological processes, including nerve function and sleep regulation. This study aims to determine whether fluctuations in magnesium intake correlate with measurable changes in sleep patterns, using synthetically generated data that mimics 50 days of tracking via wearable devices such as an Apple Watch.
+The main objectives of the project were:
+- To analyze how daily magnesium intake influences total sleep duration and sleep stages.
+- To assess whether sleep quality and supplement intake impact strength performance metrics such as bench press, squat, lat pulldown, and dumbbell press (total weight lifted).
+- To use exploratory data analysis (EDA), statistical testing, and machine learning models to uncover meaningful patterns and predictive relationships.
 
-The primary objective of the analysis is to understand if magnesium consumption impacts overall sleep quality, and if so, to which sleep parameters it is most strongly linked.
+3. Dataset Description
 
-## Dataset Description
-The dataset consists of the following variables collected over 50 days:
-- **Magnesium_mg**: Daily magnesium intake in milligrams.
-- **Sleep_Hours**: Total sleep duration in hours.
-- **Sleep_Score**: An aggregate sleep quality score (0-100 scale) inspired by wearable devices.
-- **REM_Sleep_Hours**: Duration of REM (Rapid Eye Movement) sleep in hours.
-- **Deep_Sleep_Hours**: Duration of deep sleep in hours.
-- **Light_Sleep_Hours**: Duration of light sleep in hours.
+The dataset includes the following features tracked over 60 days:
+- Sleep Metrics: Total Sleep Hours, REM, Deep, and Light Sleep durations.
+- Supplement Intake: Magnesium (mg), Glutamine (g), L-Carnitine (g), Vitamin D (IU), Creatine (g).
+- Fitness Performance: Total daily training volume (kg) for Bench Press, Squat, Lat Pulldown, and Dumbbell Press (calculated as sets * reps * weight).
+- Other: Body weight (in kg), daily step count, and calorie/macronutrient intake.
 
-The data includes mild randomness and noise to reflect realistic variability.
+4. Exploratory Data Analysis (EDA)
 
-## Methods
-- **Exploratory Data Analysis (EDA)**: Conducted to understand the basic distribution and relationships within the dataset using descriptive statistics, correlation matrices, histograms, boxplots, heatmaps, and pairplots.
-- **Correlation Analysis**: Pearson correlation coefficients were calculated to quantify the strength and direction of linear relationships between magnesium intake and each sleep parameter.
-- **Hypothesis Testing**: Statistical tests were performed for each pair to formally assess the significance of observed correlations. A 5% significance level (α = 0.05) was used to determine if relationships were statistically meaningful.
+- Correlation heatmaps showed a moderate relationship between magnesium intake and REM sleep duration.
+- Scatter plots and boxplots were used to visualize outliers and variation across supplement and performance variables.
+- Sleep Score and Sleep Duration were more influenced by REM and Light sleep stages than Deep sleep.
+- Training volume for strength movements had a loose positive association with sleep hours and magnesium intake.
 
-## Hypotheses
-For each sleep metric analyzed, the following hypotheses were tested:
-- **Null Hypothesis (H₀)**: There is no significant correlation between magnesium intake and the sleep metric.
-- **Alternative Hypothesis (H₁)**: There is a significant correlation between magnesium intake and the sleep metric.
+5. Hypothesis Testing
 
-Hypothesis testing results guided the interpretation of whether magnesium intake meaningfully influences various sleep dimensions.
+We performed Pearson correlation tests and t-tests with α = 0.05.
+Key tested hypotheses included:
+- H₀: No correlation between Magnesium and REM Sleep → Rejected.
+- H₀: No correlation between Sleep Hours and Total Training Volume → Failed to reject (weak correlation).
+- H₀: No difference in training output between high and low magnesium intake days → Borderline significance.
 
-## Results Summary
-- **Sleep Hours**: Displayed a mild positive correlation with magnesium intake; results were borderline significant.
-- **Sleep Score**: A slightly stronger positive correlation observed, suggesting magnesium may have a minor influence on perceived sleep quality.
-- **REM Sleep Hours**: Moderate positive correlation, supporting prior research suggesting magnesium could promote REM sleep.
-- **Deep Sleep Hours**: Very weak or no correlation detected.
-- **Light Sleep Hours**: Weak positive correlation, not statistically significant.
+6. Machine Learning Models Used
 
-Overall, magnesium showed varying degrees of association with sleep, being more connected to REM sleep and sleep score rather than total sleep hours or deep/light sleep.
+We tested multiple regression models to predict strength performance and sleep quality:
+- Linear Regression (for predicting Bench Press volume from sleep and supplement data).
+- Ridge and Lasso Regression (for overfitting control and variable selection).
+- Random Forest Regressor (for better handling of non-linear relationships).
+- Polynomial Features were also explored for capturing non-linearities.
+Model performance was evaluated using R² score and RMSE.
 
-## Visualizations Included
-- **Summary Statistics**: Overview of the mean, median, standard deviation, etc.
-- **Correlation Heatmap**: Visual map of inter-variable relationships.
-- **Histograms**: Distribution plots for each feature.
-- **Boxplots**: Outlier detection and spread visualization for each feature.
-- **Pairplots**: Multivariate relationships across all pairs of features.
-- **Scatterplots**: Detailed plots between magnesium intake and each sleep variable.
+7. Visual Insights from PowerPoint Slides
 
-No external data downloads are needed.
+We included the following visualizations in our final presentation:
+- Heatmaps of feature correlations.
+- Scatter plots between magnesium and sleep stages.
+- Regression plots showing model predictions vs. actual values.
+- Bar charts of daily training volume trends.
+- Pairplots of all numerical features.
+These helped in drawing meaningful conclusions and communicating our findings clearly.
 
-## Limitations and Future Work
-- The dataset is synthetic and may not perfectly represent real-world variability.
-- Other confounding factors (diet, stress, exercise) affecting sleep were not modeled.
-- Future studies could incorporate larger datasets and apply multivariate regression or machine learning models to explore more complex relationships.
+8. Conclusion
 
----
+Magnesium intake was moderately correlated with improved REM sleep and slightly better overall sleep score. However, its effect on fitness performance was minimal, suggesting indirect benefits. Sleep quality was mildly associated with higher training volumes, but the results were not uniformly strong across all movements.
+Future iterations could integrate heart rate variability, hydration, and stress data to refine the models further.
+
+
+
 
